@@ -78,6 +78,10 @@ class JoinActivity : AppCompatActivity() {
                 !isNicknameChecked ->
                     Toast.makeText(this, "닉네임 중복 확인을 해주세요", Toast.LENGTH_SHORT).show()
 
+                !isValidPassword(password) -> {
+                    Toast.makeText(this, "비밀번호는 8자 이상, 특수문자를 포함해야 합니다", Toast.LENGTH_SHORT).show()
+                }
+
                 password != confirmPassword ->
                     Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
 
@@ -86,7 +90,12 @@ class JoinActivity : AppCompatActivity() {
                     Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                     finish()
                 }
+
             }
         }
+    }
+    private fun isValidPassword(password: String): Boolean {
+        val passwordRegex = Regex("^(?=.*[!@#\$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#\$%^&*(),.?\":{}|<>]{8,}$")
+        return passwordRegex.matches(password)
     }
 }
