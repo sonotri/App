@@ -45,4 +45,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.kakao.sdk:v2-all:2.19.0")
+    implementation("com.kakao.sdk:v2-user:2.19.0")
+    implementation("com.kakao.sdk:v2-talk:2.19.0")
+    implementation("com.kakao.sdk:v2-share:2.19.0")
+    implementation("com.kakao.sdk:v2-friend:2.19.0")
+    implementation("com.kakao.sdk:v2-navi:2.19.0")
+    implementation("com.kakao.sdk:v2-cert:2.19.0")
 }
