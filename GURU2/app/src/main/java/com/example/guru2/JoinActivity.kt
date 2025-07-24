@@ -21,7 +21,7 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var joinButton: Button
 
     private var isNicknameChecked = false // 중복 확인 여부
-    private lateinit var dbHelper: UserDBHelper // DB
+    private lateinit var dbHelper: UserDBHelper // DB 헬퍼
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
