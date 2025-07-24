@@ -14,7 +14,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var idEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
-    private lateinit var joinTextView: TextView // 추가
+    private lateinit var joinTextView: TextView
+    private lateinit var dbHelper: UserDBHelper //DB 선언 추가
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.editTextPassword)
         loginButton = findViewById(R.id.buttonLogin)
         joinTextView = findViewById(R.id.textViewSignup) // 회원가입 TextView
+
+        dbHelper = UserDBHelper(this) // DB 연결
 
         loginButton.setOnClickListener {
             val id = idEditText.text.toString().trim()
@@ -46,12 +50,24 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    Toast.makeText(this, "아이디 또는 비밀번호가 올바르지 않습니다", Toast.LENGTH_SHORT).show()
+                    val db = dbHelper.readableDatabase // DB에서 회원정보 조회
+                    val cursor = db.rawQuery(
+                        "SELECT * FROM user WHERE id = ? AND password = ?",
+                        arrayOf(id, password)
+                    )
+
+                    if (cursor.moveToFirst()) {
+                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "아이디 또는 비밀번호가 올바르지 않습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    cursor.close()
                 }
             }
         }
 
-        // ✅ 회원가입 클릭 시 JoinActivity로 이동
         joinTextView.setOnClickListener {
             val intent = Intent(this, JoinActivity::class.java)
             startActivity(intent)
