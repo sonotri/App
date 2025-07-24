@@ -8,16 +8,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="32dp"
-        android:gravity="center_horizontal"
+        android:gravity="center_vertical"
         android:layout_marginBottom="60dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입"
+            android:layout_gravity="center"
             android:textSize="28sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="80dp" />
+            android:textStyle="bold" />
 
         <!-- 이메일 입력 -->
         <EditText
@@ -87,5 +87,19 @@
             android:text="JOIN"
             android:backgroundTint="#1C1C1E"
             android:textColor="@android:color/white" />
+
+        <!-- 돌아가기 버튼 -->
+        <TextView
+            android:id="@+id/textViewBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="돌아가기"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="10dp" />
+
     </LinearLayout>
 </ScrollView>
