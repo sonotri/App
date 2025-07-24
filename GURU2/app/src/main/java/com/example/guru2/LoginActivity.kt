@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.buttonLogin)
         joinTextView = findViewById(R.id.textViewSignup) // 회원가입 TextView
 
-        dbHelper = UserDBHelper(this) //DB연결
+        dbHelper = UserDBHelper(this) // DB연결
 
         loginButton.setOnClickListener {
             val id = idEditText.text.toString().trim()
