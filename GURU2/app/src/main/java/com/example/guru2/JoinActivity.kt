@@ -1,5 +1,6 @@
 package com.example.guru2
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,6 +21,7 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var joinButton: Button
 
     private var isNicknameChecked = false // 중복 확인 여부
+    private lateinit var dbHelper: UserDBHelper // DB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,8 @@ class JoinActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.editTextPassword)
         confirmPasswordEditText = findViewById(R.id.editTextPasswordConfirm)
         joinButton = findViewById(R.id.buttonJoin)
+
+        dbHelper = UserDBHelper(this) // DB 헬퍼 초기화
 
         nicknameEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -87,6 +91,26 @@ class JoinActivity : AppCompatActivity() {
 
                 else -> {
                     // TODO: 서버에 회원가입 요청 (ex. Retrofit, Firebase)
+                    val db = dbHelper.writableDatabase
+
+                    // 중복된 ID 먼저 체크
+                    val cursor = db.rawQuery("SELECT * FROM user WHERE id = ?", arrayOf(userId))
+                    if (cursor.moveToFirst()) {
+                        Toast.makeText(this, "이미 존재하는 아이디입니다", Toast.LENGTH_SHORT).show()
+                        cursor.close()
+                        return@setOnClickListener
+                    }
+                    cursor.close()
+
+                    // 값 저장
+                    val values = ContentValues().apply {
+                        put("id", userId)
+                        put("email", email)
+                        put("nickname", nickname)
+                        put("password", password)
+                    }
+
+                    db.insert("user", null, values)
                     Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                     finish()
                 }
