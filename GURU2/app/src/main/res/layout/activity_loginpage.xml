@@ -55,13 +55,16 @@
         android:layout_marginTop="16dp">
 
         <TextView
-            android:id="@+id/textViewFind"
+            android:id="@+id/textFindAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아이디/비밀번호 찾기"
             android:textSize="12sp"
             android:textColor="#555555"
-            android:layout_marginEnd="16dp" />
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            />
 
         <TextView
             android:id="@+id/textViewSignup"
@@ -73,6 +76,8 @@
             android:clickable="true"
             android:focusable="true"
             />
+
+
     </LinearLayout>
 
 </LinearLayout>

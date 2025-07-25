@@ -45,6 +45,12 @@
         <!-- 기타 액티비티 -->
         <activity android:name=".JoinActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".FindIdActivity"/>
+        <activity android:name=".FindPasswordActivity"/>
+        <activity android:name=".FindAccountActivity" />
+
+
+
 
     </application>
 

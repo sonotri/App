@@ -25,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var joinTextView: TextView
     private lateinit var kakaoLoginButton: Button
     private lateinit var dbHelper: UserDBHelper //DB 선언 추가
+    private lateinit var findAccountTextView: TextView // 추가
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -57,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.buttonLogin)
         joinTextView = findViewById(R.id.textViewSignup) // 회원가입 TextView
         kakaoLoginButton = findViewById(R.id.buttonKakaoLogin)
+        findAccountTextView = findViewById(R.id.textFindAccount)
 
         dbHelper = UserDBHelper(this) // DB 연결
 
@@ -148,6 +150,15 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, JoinActivity::class.java)
             startActivity(intent)
         }
+
+
+
+        findAccountTextView.setOnClickListener {
+            val intent = Intent(this, FindAccountActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
     // 카카오톡 로그인 콜백

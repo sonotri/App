@@ -1,5 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,6 +9,7 @@
     android:background="#FFFFFF">
 
     <TextView
+        android:id="@+id/textFindAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Find Account"
@@ -19,6 +21,7 @@
 
     <!-- 아이디 찾기 -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardFindId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -39,6 +42,7 @@
 
     <!-- 비밀번호 찾기-->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardFindPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
@@ -56,6 +60,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/textViewBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="돌아가기"
