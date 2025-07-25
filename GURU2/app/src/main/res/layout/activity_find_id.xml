@@ -16,23 +16,22 @@
         android:textStyle="bold"
         android:layout_marginBottom="40dp"/>
 
-
     <!--email 입력받는 블록-->
     <EditText
-        android:id="@+id/editTextId"
+        android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:layout_marginBottom="16dp"/>
 
     <!--닉네입 입력받는 블록-->
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/editTextNickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="닉네임"
-        android:inputType="textPassword"
+        android:inputType="textPersonName"
         android:layout_marginBottom="24dp"/>
 
     <!--제출 버튼-->

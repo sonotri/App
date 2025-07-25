@@ -11,8 +11,8 @@ class FindIdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_id)
 
-        val emailEditText = findViewById<EditText>(R.id.editTextId)         // email
-        val nicknameEditText = findViewById<EditText>(R.id.editTextPassword)// 닉네임
+        val emailEditText = findViewById<EditText>(R.id.editTextEmail)      // email
+        val nicknameEditText = findViewById<EditText>(R.id.editTextNickname)// 닉네임
         val resultTextView = findViewById<TextView>(R.id.textViewResult)    // 결과 출력 텍스트
         val clickButton = findViewById<Button>(R.id.buttonLogin)            // 버튼
         val backText = findViewById<TextView>(R.id.textViewBack)            // 돌아가기 버튼 ID

@@ -12,7 +12,7 @@ class FindPasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_find_password)
 
         val idEditText = findViewById<EditText>(R.id.editTextId)            // 아이디 입력
-        val emailEditText = findViewById<EditText>(R.id.editTextPassword)   // 이메일 입력
+        val emailEditText = findViewById<EditText>(R.id.editTextEmail)   // 이메일 입력
         val resultTextView = findViewById<TextView>(R.id.textViewResult)    // 결과 출력 텍스트
         val clickButton = findViewById<Button>(R.id.buttonLogin)            // 버튼
         val backText = findViewById<TextView>(R.id.textViewBack)            // 돌아가기 버튼 ID
