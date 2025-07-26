@@ -21,7 +21,9 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var matchRecyclerView: RecyclerView
+    private lateinit var upcomingRecyclerView: RecyclerView
     private lateinit var noMatchesTextView: TextView
+    private lateinit var upcomingTitleTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +31,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         matchRecyclerView = findViewById(R.id.recyclerViewMatches)
+        upcomingRecyclerView = findViewById(R.id.recyclerViewUpcomingMatches)
         noMatchesTextView = findViewById(R.id.text_no_matches)
-
+        upcomingTitleTextView = findViewById(R.id.text_upcoming_title)
 
         matchRecyclerView.layoutManager = LinearLayoutManager(this)
+        upcomingRecyclerView.layoutManager = LinearLayoutManager(this)
 
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
@@ -42,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 val matches = response.body()?.events ?: emptyList()
 
                 if (matches.isEmpty()) {
-                    noMatchesTextView.text = "$today 오늘은 경기 일정이 없습니다."
+                    noMatchesTextView.text = "$today 오늘은 경기 일정이 없습니다"
                     noMatchesTextView.visibility = View.VISIBLE
                     loadUpcomingMatches() // 다가오는 경기 불러오기
                 } else {
@@ -111,8 +115,9 @@ class MainActivity : AppCompatActivity() {
                     .take(2)
 
                 if (closest.isNotEmpty()) {
-                    noMatchesTextView.append("\n다가오는 경기 일정")
-                    matchRecyclerView.adapter = MatchAdapter(closest)
+                    upcomingTitleTextView.visibility = View.VISIBLE
+                    upcomingRecyclerView.visibility = View.VISIBLE
+                    upcomingRecyclerView.adapter = MatchAdapter(closest)
                 }
             }
 
