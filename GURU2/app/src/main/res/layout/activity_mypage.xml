@@ -28,7 +28,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="60dp" />
 
             <TextView
                 android:id="@+id/textViewEditSection"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2"
-                android:layout_marginBottom="40dp">
+                android:layout_marginBottom="60dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardProfileView"
@@ -114,25 +114,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="탈퇴하기"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:padding="50dp"
-                    android:gravity="center"
-                    android:textColor="#333333" />
-            </androidx.cardview.widget.CardView>
-
-            <!-- 1:1 문의 카드 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardInquiry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1:1 문의"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:padding="50dp"
