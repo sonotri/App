@@ -2,17 +2,61 @@ package com.example.guru2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var matchRecyclerView: RecyclerView
+    private lateinit var noMatchesTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        matchRecyclerView = findViewById(R.id.recyclerViewMatches)
+        noMatchesTextView = findViewById(R.id.text_no_matches)
+
+
+        matchRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+        // 오늘 경기 요청
+        RetrofitClient.api.getTodayEvents(today).enqueue(object : Callback<SportsResponse> {
+            override fun onResponse(call: Call<SportsResponse>, response: Response<SportsResponse>) {
+                val matches = response.body()?.events ?: emptyList()
+
+                if (matches.isEmpty()) {
+                    noMatchesTextView.text = "$today 오늘은 경기 일정이 없습니다."
+                    noMatchesTextView.visibility = View.VISIBLE
+                    loadUpcomingMatches() // 다가오는 경기 불러오기
+                } else {
+                    matchRecyclerView.adapter = MatchAdapter(matches)
+                    noMatchesTextView.visibility = View.GONE
+                }
+            }
+
+            override fun onFailure(call: Call<SportsResponse>, t: Throwable) {
+                Log.e("API_FAIL", "에러: ${t.message}")
+                noMatchesTextView.text = "경기 정보를 불러오지 못했습니다."
+                noMatchesTextView.visibility = View.VISIBLE
+            }
+        })
 
         // 시스템 UI 여백 처리
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -21,36 +65,60 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // ⬇ 툴바 버튼 연결
+        // 하단 메뉴 버튼 연결
         val btnHome = findViewById<ImageButton>(R.id.btn_home)
         val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
         val btnPlayer = findViewById<ImageButton>(R.id.btn_player)
         val btnLocation = findViewById<ImageButton>(R.id.btn_location)
         val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
 
-        // ⬇ 버튼 클릭 이벤트 처리
-        btnHome.setOnClickListener {
-            // 현재 MainActivity 이므로 새로 열 필요 없음
-        }
-
+        btnHome.setOnClickListener {}
         btnSchedule.setOnClickListener {
-            val intent = Intent(this, ScheduleActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, ScheduleActivity::class.java))
         }
-
         btnPlayer.setOnClickListener {
-            val intent = Intent(this, PlayerActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, PlayerActivity::class.java))
         }
-
         btnLocation.setOnClickListener {
-            val intent = Intent(this, LocationActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LocationActivity::class.java))
         }
-
         btnProfile.setOnClickListener {
-            val intent = Intent(this, MypageActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MypageActivity::class.java))
         }
+    }
+
+    // 다가오는 경기 일정 로드 함수
+    private fun loadUpcomingMatches() {
+        RetrofitClient.api.getUpcomingEvents().enqueue(object : Callback<SportsResponse> {
+            override fun onResponse(call: Call<SportsResponse>, response: Response<SportsResponse>) {
+                val allUpcoming = response.body()?.events ?: return
+
+                val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val today = formatter.parse(formatter.format(Date()))
+
+                val closest = allUpcoming
+                    .filter {
+                        try {
+                            val eventDate = formatter.parse(it.dateEvent ?: "9999-12-31")
+                            eventDate != null && eventDate.after(today)
+                        } catch (e: Exception) {
+                            false
+                        }
+                    }
+                    .sortedBy {
+                        formatter.parse(it.dateEvent ?: "9999-12-31")
+                    }
+                    .take(2)
+
+                if (closest.isNotEmpty()) {
+                    noMatchesTextView.append("\n다가오는 경기 일정")
+                    matchRecyclerView.adapter = MatchAdapter(closest)
+                }
+            }
+
+            override fun onFailure(call: Call<SportsResponse>, t: Throwable) {
+                Log.e("UPCOMING_FAIL", "다가오는 경기 로드 실패: ${t.message}")
+            }
+        })
     }
 }

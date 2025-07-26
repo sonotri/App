@@ -23,23 +23,43 @@
             android:layout_marginBottom="20dp" />
     </LinearLayout>
 
-    <!-- 오늘의 경기 일정 + 툴바 영역-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!-- 오늘의 경기 일정 부분(api 연결) -->
-        <FrameLayout
-            android:id="@+id/container"
+        <!-- 오늘의 경기 없음 안내 -->
+        <TextView
+            android:id="@+id/text_no_matches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘은 경기 일정이 없습니다."
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:visibility="gone" />
+
+        <!-- 오늘 경기 일정 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMatches"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <!-- 다가오는 경기 제목 (기본 숨김) -->
+        <TextView
+            android:id="@+id/text_upcoming_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다가오는 경기 일정"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:visibility="gone" />
+
+        <!-- 툴바 -->
         <include layout="@layout/toolbar" />
     </LinearLayout>
 </LinearLayout>
-
-
-

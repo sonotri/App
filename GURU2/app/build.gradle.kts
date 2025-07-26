@@ -52,4 +52,7 @@ dependencies {
     implementation("com.kakao.sdk:v2-friend:2.19.0")
     implementation("com.kakao.sdk:v2-navi:2.19.0")
     implementation("com.kakao.sdk:v2-cert:2.19.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
 }
