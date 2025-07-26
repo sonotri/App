@@ -48,6 +48,13 @@
         <activity android:name=".FindIdActivity"/>
         <activity android:name=".FindPasswordActivity"/>
         <activity android:name=".FindAccountActivity" />
+        <activity android:name=".ScheduleActivity" />
+        <activity android:name=".PlayerActivity" />
+        <activity android:name=".LocationActivity" />
+        <activity android:name=".MypageActivity" />
+
+
+
 
 
 
