@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원 탈퇴"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="50dp"
+                android:gravity="center" />
+
+            <!-- 체크박스 1 -->
+            <CheckBox
+                android:id="@+id/checkBox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기록 삭제"
+                android:layout_marginBottom="4dp" />
+
+            <!-- 체크박스 2 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="30dp"
+                android:text="회원 탈퇴를 진행하시면, 서비스 이용시 보유하고 있던 개인의 모든 데이터는 삭제됩니다."
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아이디와 연계된 모든 사적인 영역이 정보 삭제"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원 탈퇴 후, 해당 서비스를 더이상 이용할 수 없으며, 모든 사적인 정보는 삭제됩니다."
+                android:textSize="12sp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="20dp"/>
+
+            <!-- 체크박스 3 -->
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개인정보 보유 관련 사항"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원 탈퇴를 하더라도 특정한 사유가 있을 시 일정기간동안 개인정보를 보관할 수 있습니다."
+                android:textSize="12sp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="20dp"/>
+
+            <!-- 체크박스 4 -->
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="기타 정책 및 약관 정보 삭제"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기타 해당 어플리케이션의 정책, 약관 등에서 정하고 있는 정보가 삭제됩니다."
+                android:textSize="12sp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="20dp"/>
+
+
+            <!-- 다음으로 버튼 -->
+            <Button
+                android:id="@+id/buttonWithdraw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="다음으로"
+                android:layout_gravity="center"
+                android:backgroundTint="#3F51B5"
+                android:textColor="@android:color/white"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 하단 고정 툴바 -->
+    <include layout="@layout/toolbar" />
+</LinearLayout>
+
+
