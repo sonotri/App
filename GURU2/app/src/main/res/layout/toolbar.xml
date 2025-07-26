@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:background="#EEEEEE"
+    android:weightSum="5"
+    android:padding="4dp">
+
+    <ImageButton
+        android:id="@+id/btn_schedule"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_note"
+        android:background="@android:color/transparent"
+        android:contentDescription="경기 기록" />
+
+    <ImageButton
+        android:id="@+id/btn_player"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_location"
+        android:background="@android:color/transparent"
+        android:contentDescription="경기장 위치" />
+
+    <ImageButton
+        android:id="@+id/btn_home"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_home"
+        android:background="@android:color/transparent"
+        android:contentDescription="홈" />
+
+    <ImageButton
+        android:id="@+id/btn_location"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_list"
+        android:background="@android:color/transparent"
+        android:contentDescription="선수/팀 목록" />
+
+    <ImageButton
+        android:id="@+id/btn_profile"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_mypage"
+        android:background="@android:color/transparent"
+        android:contentDescription="마이페이지" />
+</LinearLayout>
