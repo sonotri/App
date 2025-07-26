@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- 스크롤 가능한 본문 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- 타이틀 -->
             <TextView
                 android:id="@+id/textViewProfileTitle"
                 android:layout_width="wrap_content"
@@ -30,7 +28,7 @@
                 android:layout_marginBottom="80dp"
                 android:layout_gravity="center_horizontal" />
 
-            <!-- 닉네임 -->
+            <!-- 닉네임 출력 부분-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -54,7 +52,7 @@
                     android:layout_marginTop="4dp" />
             </LinearLayout>
 
-            <!-- 이메일 -->
+            <!-- 이메일 출력 부분-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -78,7 +76,7 @@
                     android:layout_marginTop="4dp" />
             </LinearLayout>
 
-            <!-- 아이디 -->
+            <!-- 아이디 출력 부분-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -102,7 +100,7 @@
                     android:layout_marginTop="4dp" />
             </LinearLayout>
 
-            <!-- 비밀번호 -->
+            <!-- 비밀번호 출력 부분-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
