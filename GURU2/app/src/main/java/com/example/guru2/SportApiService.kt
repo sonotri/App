@@ -15,6 +15,11 @@ interface SportsApiService {
     fun getUpcomingEvents(
         @Query("id") leagueId: String = "4328"
     ): Call<SportsResponse>
+
+    @GET("searchteams.php")
+    fun searchTeam(
+        @Query("t") teamName: String
+    ): Call<TeamResponse>
 }
 
 data class SportsResponse(
