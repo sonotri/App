@@ -64,18 +64,18 @@
                 android:layout_height="wrap_content"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
-                android:layout_marginBottom="32dp" />
+                android:layout_marginBottom="20dp" />
 
             <!-- 현재 비밀번호 확인 -->
             <EditText
                 android:id="@+id/editTextCurrentPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="현재 비밀번호"
+                android:hint="현재 비밀번호 입력"
                 android:inputType="textPassword"
                 android:background="@drawable/round_border"
                 android:padding="12dp"
-                android:layout_marginBottom="32dp" />
+                android:layout_marginBottom="50dp" />
 
             <!-- 변경 버튼 -->
             <Button
