@@ -62,7 +62,7 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="새 비밀번호"
+                android:hint="비밀번호"
                 android:inputType="textPassword"
                 android:layout_marginBottom="32dp" />
 
