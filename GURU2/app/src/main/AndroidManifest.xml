@@ -58,12 +58,10 @@
         <activity android:name=".PlayerActivity" />
         <activity android:name=".LocationActivity" />
         <activity android:name=".MypageActivity" />
-
-
-
-
-
-
+        <activity android:name=".ProfileDeleteActivity" />
+        <activity android:name=".RealProfileDeleteActivity" />
+        <activity android:name=".ProfileManageActivity" />
+        <activity android:name=".ProfileViewActivity" />
 
     </application>
 

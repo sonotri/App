@@ -1,6 +1,7 @@
 package com.example.guru2
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var kakaoLoginButton: Button
     private lateinit var dbHelper: UserDBHelper //DB 선언 추가
     private lateinit var findAccountTextView: TextView // 추가
+    private lateinit var sharedPref: SharedPreferences // 현재 로그인한 사용자 정보
 
     private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
@@ -61,6 +63,7 @@ class LoginActivity : AppCompatActivity() {
         findAccountTextView = findViewById(R.id.textFindAccount)
 
         dbHelper = UserDBHelper(this) // DB 연결
+        sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
 
         // 로그인 버튼 클릭 시
         loginButton.setOnClickListener {
@@ -77,12 +80,12 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 // 테스트
-                id == "testuser" && password == "Test@1234" -> {
-                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
+//                id == "testuser" && password == "Test@1234" -> {
+//                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+//                    val intent = Intent(this, MainActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                }
 
                 else -> {
                     val db = dbHelper.readableDatabase // DB에서 회원정보 조회
@@ -92,6 +95,10 @@ class LoginActivity : AppCompatActivity() {
                     )
 
                     if (cursor.moveToFirst()) {
+                        val editor = sharedPref.edit()
+                        editor.putString("loggedInUserId", id)
+                        editor.apply()
+
                         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
@@ -150,8 +157,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, JoinActivity::class.java)
             startActivity(intent)
         }
-
-
 
         findAccountTextView.setOnClickListener {
             val intent = Intent(this, FindAccountActivity::class.java)

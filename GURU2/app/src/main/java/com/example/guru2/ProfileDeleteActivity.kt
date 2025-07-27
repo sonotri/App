@@ -2,16 +2,19 @@ package com.example.guru2
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 
-class MypageActivity : AppCompatActivity() {
+class ProfileDeleteActivity : AppCompatActivity() {
 
-    private lateinit var cardProfileView: CardView
-    private lateinit var cardProfileEdit: CardView
-    private lateinit var cardWithdraw: CardView
+    private lateinit var buttonWithdraw: Button
+    private lateinit var checkBox1: CheckBox
+    private lateinit var checkBox2: CheckBox
+    private lateinit var checkBox3: CheckBox
+    private lateinit var checkBox4: CheckBox
 
     // 툴바
     private lateinit var buttonSchedule: ImageButton
@@ -22,11 +25,13 @@ class MypageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mypage)
+        setContentView(R.layout.activity_delete_profile)
 
-        cardProfileView = findViewById(R.id.cardProfileView)
-        cardProfileEdit = findViewById(R.id.cardProfileEdit)
-        cardWithdraw = findViewById(R.id.cardWithdraw)
+        buttonWithdraw = findViewById(R.id.buttonWithdraw)
+        checkBox1 = findViewById(R.id.checkBox1)
+        checkBox2 = findViewById(R.id.checkBox2)
+        checkBox3 = findViewById(R.id.checkBox3)
+        checkBox4 = findViewById(R.id.checkBox4)
 
         // 툴바 버튼 연동
         buttonSchedule = findViewById(R.id.btn_schedule)
@@ -35,25 +40,15 @@ class MypageActivity : AppCompatActivity() {
         buttonLocation = findViewById(R.id.btn_location)
         buttonProfile = findViewById(R.id.btn_profile)
 
-        // 프로필 조회 클릭
-        cardProfileView.setOnClickListener {
-            Log.d("Mypage", "프로필 보기 버튼 클릭됨")
-            val intent = Intent(this, ProfileViewActivity::class.java)
+        // 다음으로 버튼 클릭
+        buttonWithdraw.setOnClickListener {
+            if (checkBox1.isChecked && checkBox2.isChecked && checkBox3.isChecked && checkBox4.isChecked) {
+            val intent = Intent(this, RealProfileDeleteActivity::class.java)
             startActivity(intent)
+            } else {
+                Toast.makeText(this, "모든 항목에 동의해야 진행할 수 있습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
-
-        // 프로필 관리 클릭
-        cardProfileEdit.setOnClickListener {
-            val intent = Intent(this, ProfileManageActivity::class.java)
-            startActivity(intent)
-        }
-
-        // 탈퇴하기 클릭
-        cardWithdraw.setOnClickListener {
-            val intent = Intent(this, ProfileDeleteActivity::class.java)
-            startActivity(intent)
-        }
-
 
         // 툴바 버튼 리스너
         buttonSchedule.setOnClickListener {
@@ -81,4 +76,5 @@ class MypageActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }
