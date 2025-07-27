@@ -1,32 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/schedule_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF">
 
-    <!-- 상단 내용 영역 -->
-    <ScrollView
+    <!-- 제목 -->
+    <TextView
+        android:id="@+id/textScheduleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Match Record"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentTop="true" />
+
+    <!-- 캘린더 -->
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_below="@id/textScheduleTitle"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="#1C1C1E"
+        app:mcv_weekDayTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:mcv_dateTextAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="경기 기록 페이지입니다"
-                android:textSize="20sp" />
-        </LinearLayout>
-    </ScrollView>
+    <!-- 기록 버튼 -->
+    <Button
+        android:id="@+id/btnWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기록"
+        android:layout_below="@id/calendarView"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#3F51B5"
+        android:layout_marginBottom="80dp" /> <!-- 툴바와 겹치지 않게 하단 여백 확보 -->
 
     <!-- 하단 고정 툴바 -->
-    <include layout="@layout/toolbar" />
-</LinearLayout>
+    <include
+        android:id="@+id/bottomToolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
+
+
+
+
+
 
