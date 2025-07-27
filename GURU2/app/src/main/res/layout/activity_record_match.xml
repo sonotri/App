@@ -190,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:gravity="top"
-            android:hint="Write your thoughts..."
+            android:hint="소감을 작성해보세요!"
             android:inputType="textMultiLine"
             android:layout_marginBottom="24dp" />
 
