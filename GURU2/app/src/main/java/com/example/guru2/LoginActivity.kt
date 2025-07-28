@@ -1,7 +1,9 @@
 package com.example.guru2
 
+import android.content.ContentValues
 import android.content.Intent
 import android.content.SharedPreferences
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -29,31 +31,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var findAccountTextView: TextView // 추가
     private lateinit var sharedPref: SharedPreferences // 현재 로그인한 사용자 정보
 
-    private val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            Log.e("KakaoLogin", "카카오계정 로그인 실패", error)
-        } else if (token != null) {
-            Log.i("KakaoLogin", "카카오계정 로그인 성공 ${token.accessToken}")
-
-            // 사용자 정보 요청
-            UserApiClient.instance.me { user, error ->
-                if (user != null) {
-                    val nickname = user.kakaoAccount?.profile?.nickname
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("nickname", nickname)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loginpage)
 
         // 해시 키 확인용 로그 출력
-        Log.d("KeyHash", getKeyHash(this) ?: "해시 키 추출 실패")
+        Log.d("KeyHash", getKeyHash(this))
 
         idEditText = findViewById(R.id.editTextId)
         passwordEditText = findViewById(R.id.editTextPassword)
@@ -72,13 +55,15 @@ class LoginActivity : AppCompatActivity() {
 
             when {
                 id.isEmpty() || password.isEmpty() -> {
-                    Toast.makeText(this, "아이디와 비밀번호를 모두 입력해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "아이디와 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
 
                 !isValidPassword(password) -> {
                     Toast.makeText(this, "비밀번호는 8자 이상, 특수문자를 포함해야 합니다", Toast.LENGTH_SHORT).show()
                 }
 
+                // 테스트용 아이디
                 id == "testuser" && password == "Test@1234" -> {
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
@@ -94,9 +79,10 @@ class LoginActivity : AppCompatActivity() {
                     )
 
                     if (cursor.moveToFirst()) {
-                        val editor = sharedPref.edit()
-                        editor.putString("loggedInUserId", id)
-                        editor.apply()
+                        val nickname = cursor.getString(cursor.getColumnIndexOrThrow("nickname"))
+                        val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
+
+                        saveUserToSQLiteAndPrefs(id, nickname, email, password, "local")
 
                         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, MainActivity::class.java))
@@ -105,50 +91,36 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "아이디 또는 비밀번호가 올바르지 않습니다", Toast.LENGTH_SHORT).show()
                     }
                     cursor.close()
+                    db.close()
                 }
             }
         }
-
-//        kakaoLoginButton.setOnClickListener {
-//            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-//                // 카카오톡 앱으로 로그인 시도
-//                UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-//                    if (error != null) {
-//                        Log.e("KakaoLogin", "카카오톡 로그인 실패, 계정 로그인으로 대체", error)
-//
-//                        // 카카오계정 로그인으로 대체
-//                        UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
-//                            handleKakaoLoginResult(token, error)
-//                        }
-//
-//                    } else {
-//                        handleKakaoLoginResult(token, error)
-//                    }
-//                }
-//            } else {
-//                // 카카오 계정으로 로그인 (웹뷰 방식)
-//                UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
-//                    handleKakaoLoginResult(token, error)
-//                }
-//            }
-//        }
 
         // 카카오 로그인 버튼 클릭 시
         kakaoLoginButton.setOnClickListener {
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-                    if (error != null) {
-                        Log.e("KakaoLogin", "카카오톡 로그인 실패", error)
-                        if (error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
-                        UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-                    } else if (token != null) {
-                        Log.i("KakaoLogin", "카카오톡 로그인 성공 ${token.accessToken}")
-                        callback(token, null)
-                    }
+                    if (error != null && error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
+                    if (token != null) handleKakaoLogin()
+                    else UserApiClient.instance.loginWithKakaoAccount(this, callback = kakaoCallback)
                 }
             } else {
-                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = kakaoCallback)
             }
+//            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+//                UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
+//                    if (error != null) {
+//                        Log.e("KakaoLogin", "카카오톡 로그인 실패", error)
+//                        if (error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
+//                        UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+//                    } else if (token != null) {
+//                        Log.i("KakaoLogin", "카카오톡 로그인 성공 ${token.accessToken}")
+//                        callback(token, null)
+//                    }
+//                }
+//            } else {
+//                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+//            }
         }
 
         // 회원가입 버튼 클릭 시
@@ -165,31 +137,49 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    // 카카오톡 로그인 콜백
-//    private fun handleKakaoLoginResult(token: OAuthToken?, error: Throwable?) {
-//        if (error != null) {
-//            Log.e("KakaoLogin", "로그인 실패", error)
-//            Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
-//        } else if (token != null) {
-//            Log.d("KakaoLogin", "로그인 성공: ${token.accessToken}")
-//
-//            UserApiClient.instance.me { user, error ->
-//                if (error != null) {
-//                    Log.e("KakaoLogin", "사용자 정보 요청 실패", error)
-//                } else if (user != null) {
-////                    val id = user.id
-////                    val email = user.kakaoAccount?.email
-//                    val nickname = user.kakaoAccount?.profile?.nickname
-//                    Log.d("KakaoLogin", "카카오 사용자 정보: $nickname")
-//
-//                    val intent = Intent(this, MainActivity::class.java)
-//                    intent.putExtra("nickname", nickname)
-//                    startActivity(intent)
-//                    finish()
-//                }
-//            }
-//        }
-//    }
+    // 카카오 로그인 처리 콜백
+    private val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Log.e("KakaoLogin", "카카오 로그인 실패", error)
+        } else if (token != null) {
+            handleKakaoLogin()
+        }
+    }
+
+    // 카카오 사용자 정보 받아 저장
+    private fun handleKakaoLogin() {
+        UserApiClient.instance.me { user, _ ->
+            if (user != null) {
+                val kakaoId = user.id.toString()
+                val nickname = user.kakaoAccount?.profile?.nickname ?: "닉네임 없음"
+                val email = user.kakaoAccount?.email ?: "null@null.com"
+
+                saveUserToSQLiteAndPrefs(kakaoId, nickname, email, "kakao", "kakao")
+
+                Toast.makeText(this, "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
+    }
+
+    private fun saveUserToSQLiteAndPrefs(id: String, nickname: String, email: String, password: String, loginType: String) {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("id", id)
+            put("nickname", nickname)
+            put("email", email)
+            put("password", password)
+            put("login_type", loginType)
+        }
+        db.insertWithOnConflict("user", null, values, SQLiteDatabase.CONFLICT_IGNORE)
+        db.close()
+
+        sharedPref.edit()
+            .putString("loggedInUserId", id)
+            .putString("loginType", loginType)
+            .apply()
+    }
 
     private fun isValidPassword(password: String): Boolean {
         val passwordRegex = Regex("^(?=.*[!@#\$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#\$%^&*(),.?\":{}|<>]{8,}$")

@@ -14,7 +14,8 @@ class UserDBHelper(context: Context) : // DB
                 id TEXT PRIMARY KEY,
                 email TEXT,
                 nickname TEXT,
-                password TEXT
+                password TEXT,
+                login_type TEXT
             )
             """.trimIndent()
         )
