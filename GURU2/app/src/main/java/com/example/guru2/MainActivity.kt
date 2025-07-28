@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, ScheduleActivity::class.java))
         }
         btnPlayer.setOnClickListener {
-            startActivity(Intent(this, LocationActivity::class.java))
+            startActivity(Intent(this, PlayerActivity::class.java))
         }
         btnLocation.setOnClickListener {
             startActivity(Intent(this, LocationActivity::class.java))
