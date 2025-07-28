@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class UserDBHelper(context: Context) : // DB
-    SQLiteOpenHelper(context, "UserDB", null, 1) {
+    SQLiteOpenHelper(context, "UserDB", null, 2) {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(

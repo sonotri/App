@@ -34,7 +34,7 @@ class PlayerActivity : AppCompatActivity() {
         Team("Aston Villa", R.drawable.logo_aston_villa),
         Team("Bournemouth", R.drawable.logo_bournemouth),
         Team("Brentford", R.drawable.logo_brentford),
-        Team("Brighton & Hove Albion", R.drawable.logo_brighton),
+        Team("Brighton", R.drawable.logo_brighton),
         Team("Burnley", R.drawable.logo_burnley),
         Team("Chelsea", R.drawable.logo_chelsea),
         Team("Crystal Palace", R.drawable.logo_crystal_palace),
@@ -48,7 +48,7 @@ class PlayerActivity : AppCompatActivity() {
         Team("Nottingham Forest", R.drawable.logo_nottingham),
         Team("Tottenham Hotspur", R.drawable.logo_tottenham),
         Team("West Ham United", R.drawable.logo_west_ham),
-        Team("Wolverhampton Wanderers", R.drawable.logo_wolves),
+        Team("Wolverhampton", R.drawable.logo_wolves),
         Team("Ipswich Town", R.drawable.logo_ipswich)
     )
 
