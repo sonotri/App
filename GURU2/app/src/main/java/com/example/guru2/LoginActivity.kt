@@ -79,13 +79,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "비밀번호는 8자 이상, 특수문자를 포함해야 합니다", Toast.LENGTH_SHORT).show()
                 }
 
-                // 테스트
-//                id == "testuser" && password == "Test@1234" -> {
-//                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(this, MainActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                }
+                id == "testuser" && password == "Test@1234" -> {
+                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
 
                 else -> {
                     val db = dbHelper.readableDatabase // DB에서 회원정보 조회
