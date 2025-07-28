@@ -1,9 +1,15 @@
 package com.example.guru2
 
+import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -16,80 +22,77 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlayerActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
-    private lateinit var teamInput: EditText
-    private lateinit var btnSearch: Button
+
+class TeamListActivity : AppCompatActivity() {
+
+    data class Team(val name: String, val logoRes: Int)
+
+    private val teamList = listOf(
+        Team("Arsenal", R.drawable.logo_arsenal),
+        Team("Aston Villa", R.drawable.logo_aston_villa),
+        Team("Bournemouth", R.drawable.logo_bournemouth),
+        Team("Brentford", R.drawable.logo_brentford),
+        Team("Brighton & Hove Albion", R.drawable.logo_brighton),
+        Team("Burnley", R.drawable.logo_burnley),
+        Team("Chelsea", R.drawable.logo_chelsea),
+        Team("Crystal Palace", R.drawable.logo_crystal_palace),
+        Team("Everton", R.drawable.logo_everton),
+        Team("Fulham", R.drawable.logo_fulham),
+        Team("Leeds United", R.drawable.logo_leeds),
+        Team("Liverpool", R.drawable.logo_liverpool),
+        Team("Manchester City", R.drawable.logo_manchester_city),
+        Team("Manchester United", R.drawable.logo_manchester_united),
+        Team("Newcastle United", R.drawable.logo_newcastle),
+        Team("Nottingham Forest", R.drawable.logo_nottingham),
+        Team("Tottenham Hotspur", R.drawable.logo_tottenham),
+        Team("West Ham United", R.drawable.logo_west_ham),
+        Team("Wolverhampton Wanderers", R.drawable.logo_wolves),
+        Team("Ipswich Town", R.drawable.logo_ipswich)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
-        teamInput = findViewById(R.id.editTextTeam)
-        btnSearch = findViewById(R.id.btnSearch)
+        val teamContainer = findViewById<LinearLayout>(R.id.teamContainer)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        for (team in teamList) {
+            val box = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                setBackgroundResource(R.drawable.less_round_border)
+                setPadding(24.dp, 16.dp, 24.dp, 16.dp)
+                layoutParams = LinearLayout.LayoutParams(350.dp, 80.dp).apply {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                    bottomMargin = 20.dp
+                }
+                gravity = Gravity.CENTER_VERTICAL
+                isClickable = true
+                isFocusable = true
 
-        btnSearch.setOnClickListener {
-            val teamName = teamInput.text.toString().trim()
-            if (teamName.isNotEmpty()) {
-                searchTeamLocation(teamName)
-            } else {
-                Toast.makeText(this, "팀 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+                setOnClickListener {
+                    val intent = Intent(this@TeamListActivity, TeamDetailActivity::class.java)
+                    intent.putExtra("teamName", team.name)
+                    startActivity(intent)
+                }
+
+                addView(ImageView(this@TeamListActivity).apply {
+                    setImageResource(team.logoRes)
+                    layoutParams = LinearLayout.LayoutParams(24.dp, 24.dp)
+                })
+
+                addView(TextView(this@TeamListActivity).apply {
+                    text = team.name
+                    textSize = 20f
+                    setTypeface(null, Typeface.BOLD)
+                    setPadding(70.dp, 0, 0, 0)
+                })
             }
+
+            teamContainer.addView(box)
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-    }
-
-    private fun searchTeamLocation(teamName: String) {
-        RetrofitClient.api.searchTeam(teamName).enqueue(object : Callback<TeamResponse> {
-            override fun onResponse(call: Call<TeamResponse>, response: Response<TeamResponse>) {
-                if (!response.isSuccessful) {
-                    Toast.makeText(this@PlayerActivity, "API 응답 실패", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
-                val team = response.body()?.teams?.firstOrNull()
-
-                if (team != null) {
-                    Log.d("API_DEBUG", "팀: ${team.strTeam}, 위도: ${team.strStadiumLatitude}, 경도: ${team.strStadiumLongitude}")
-
-                    val latStr = team.strStadiumLatitude
-                    val lngStr = team.strStadiumLongitude
-
-                    if (!latStr.isNullOrBlank() && !lngStr.isNullOrBlank()) {
-                        val lat = latStr.toDoubleOrNull()
-                        val lng = lngStr.toDoubleOrNull()
-
-                        if (lat != null && lng != null) {
-                            val stadiumLocation = LatLng(lat, lng)
-                            mMap.clear()
-                            mMap.addMarker(
-                                MarkerOptions()
-                                    .position(stadiumLocation)
-                                    .title("${team.strTeam} 홈구장: ${team.strStadium}")
-                            )
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stadiumLocation, 14f))
-                        } else {
-                            Toast.makeText(this@PlayerActivity, "위도/경도 형식 오류", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(this@PlayerActivity, "위도/경도 정보가 없습니다", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(this@PlayerActivity, "팀 정보를 찾을 수 없습니다", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onFailure(call: Call<TeamResponse>, t: Throwable) {
-                Toast.makeText(this@PlayerActivity, "API 오류: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.e("API_ERROR", "API 호출 실패", t)
-            }
-        })
-    }
+    // 확장 함수: dp → px 변환
+    val Int.dp: Int get() = (this * resources.displayMetrics.density).toInt()
 }
