@@ -79,14 +79,14 @@ class PlayerActivity : AppCompatActivity() {
 
                 addView(ImageView(this@PlayerActivity).apply {
                     setImageResource(team.logoRes)
-                    layoutParams = LinearLayout.LayoutParams(24.dp, 24.dp)
+                    layoutParams = LinearLayout.LayoutParams(48.dp, 48.dp)
                 })
 
                 addView(TextView(this@PlayerActivity).apply {
                     text = team.name
                     textSize = 20f
                     setTypeface(null, Typeface.BOLD)
-                    setPadding(70.dp, 0, 0, 0)
+                    setPadding(40.dp, 0, 0, 0)
                 })
             }
 
