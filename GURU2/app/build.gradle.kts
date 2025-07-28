@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.guru2"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.guru2"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -55,6 +55,6 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.google.android.gms:play-services-maps:19.2.0")
-    implementation("com.prolificinteractive:material-calendarview:1.4.3") //캘린더 양식 github import
+    implementation("com.github.applikeysolutions:cosmocalendar:1.0.4") //캘린더 양식 github import
 
 }
