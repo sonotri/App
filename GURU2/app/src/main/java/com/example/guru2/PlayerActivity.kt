@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,7 +25,7 @@ import retrofit2.Response
 
 
 
-class TeamListActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity() {
 
     data class Team(val name: String, val logoRes: Int)
 
@@ -71,17 +72,17 @@ class TeamListActivity : AppCompatActivity() {
                 isFocusable = true
 
                 setOnClickListener {
-                    val intent = Intent(this@TeamListActivity, TeamDetailActivity::class.java)
+                    val intent = Intent(this@PlayerActivity, TeamDetailActivity::class.java)
                     intent.putExtra("teamName", team.name)
                     startActivity(intent)
                 }
 
-                addView(ImageView(this@TeamListActivity).apply {
+                addView(ImageView(this@PlayerActivity).apply {
                     setImageResource(team.logoRes)
                     layoutParams = LinearLayout.LayoutParams(24.dp, 24.dp)
                 })
 
-                addView(TextView(this@TeamListActivity).apply {
+                addView(TextView(this@PlayerActivity).apply {
                     text = team.name
                     textSize = 20f
                     setTypeface(null, Typeface.BOLD)
@@ -90,6 +91,23 @@ class TeamListActivity : AppCompatActivity() {
             }
 
             teamContainer.addView(box)
+        }
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnLocation = findViewById<ImageButton>(R.id.btn_location)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {}
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnLocation.setOnClickListener {
+            startActivity(Intent(this, LocationActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
         }
     }
 
