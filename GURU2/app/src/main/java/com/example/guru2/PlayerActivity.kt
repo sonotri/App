@@ -24,7 +24,7 @@ import retrofit2.Response
 
 
 
-class TeamListActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity() {
 
     data class Team(val name: String, val logoRes: Int)
 
@@ -71,17 +71,17 @@ class TeamListActivity : AppCompatActivity() {
                 isFocusable = true
 
                 setOnClickListener {
-                    val intent = Intent(this@TeamListActivity, TeamDetailActivity::class.java)
+                    val intent = Intent(this@PlayerActivity, TeamDetailActivity::class.java)
                     intent.putExtra("teamName", team.name)
                     startActivity(intent)
                 }
 
-                addView(ImageView(this@TeamListActivity).apply {
+                addView(ImageView(this@PlayerActivity).apply {
                     setImageResource(team.logoRes)
                     layoutParams = LinearLayout.LayoutParams(24.dp, 24.dp)
                 })
 
-                addView(TextView(this@TeamListActivity).apply {
+                addView(TextView(this@PlayerActivity).apply {
                     text = team.name
                     textSize = 20f
                     setTypeface(null, Typeface.BOLD)

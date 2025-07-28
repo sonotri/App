@@ -18,7 +18,7 @@
         android:contentDescription="경기 기록" />
 
     <ImageButton
-        android:id="@+id/btn_player"
+        android:id="@+id/btn_location"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
@@ -36,7 +36,7 @@
         android:contentDescription="홈" />
 
     <ImageButton
-        android:id="@+id/btn_location"
+        android:id="@+id/btn_player"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
