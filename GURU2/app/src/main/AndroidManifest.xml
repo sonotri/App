@@ -62,6 +62,8 @@
         <activity android:name=".RealProfileDeleteActivity" />
         <activity android:name=".ProfileManageActivity" />
         <activity android:name=".ProfileViewActivity" />
+        <activity android:name=".TeamDetailActivity" />
+
 
     </application>
 
