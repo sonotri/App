@@ -37,19 +37,45 @@ class RealProfileDeleteActivity : AppCompatActivity() {
         buttonLocation = findViewById(R.id.btn_location)
         buttonProfile = findViewById(R.id.btn_profile)
 
+        // 로그인 정보 가져오기
+        val sharedPref = getSharedPreferences("user_session", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("loggedInUserId", null)
+        val loginType = sharedPref.getString("loginType", null)
+
+        // 카카오 로그인 사용자는 비밀번호 입력창 비활성화
+        if (loginType == "kakao") {
+            editPassword.isEnabled = false
+            editPassword.hint = "카카오 계정은 비밀번호 입력 없음"
+        }
+
         // 탈퇴 버튼 클릭
         buttonWithdraw.setOnClickListener {
+            if (userId == null) {
+                Toast.makeText(this, "로그인 정보가 없습니다", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 카카오 로그인 사용자
+            if (loginType == "kakao") {
+                // 비밀번호 없이 바로 탈퇴
+                val db = dbHelper.writableDatabase
+                db.delete("user", "id = ?", arrayOf(userId))
+                db.close()
+
+                sharedPref.edit().clear().apply()
+
+                Toast.makeText(this, "회원 탈퇴가 완료되었습니다", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+                return@setOnClickListener
+            }
+
+            // 일반 로그인 사용자
             val inputPassword = editPassword.text?.toString() ?: ""
             if (inputPassword.isEmpty()) {
                 Toast.makeText(this, "패스워드를 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            // SharedPreferences에서 로그인된 ID 가져오기
-            val sharedPref = getSharedPreferences("user_session", Context.MODE_PRIVATE)
-            val userId = sharedPref.getString("loggedInUserId", null)
-
-            if (userId == null) {
-                Toast.makeText(this, "로그인 정보가 없습니다", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -62,7 +88,6 @@ class RealProfileDeleteActivity : AppCompatActivity() {
                 writeDb.delete("user", "id = ?", arrayOf(userId))
                 dbHelper.close()
 
-                // 로그아웃 처리
                 sharedPref.edit().clear().apply()
 
                 Toast.makeText(this, "회원 탈퇴가 완료되었습니다", Toast.LENGTH_SHORT).show()
