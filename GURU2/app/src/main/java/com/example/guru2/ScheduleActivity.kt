@@ -16,7 +16,11 @@ class ScheduleActivity : AppCompatActivity() {
         val btnLocation = findViewById<ImageButton>(R.id.btn_location)
         val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
 
-        btnHome.setOnClickListener {}
+        btnHome.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         btnPlayer.setOnClickListener {
             startActivity(Intent(this, PlayerActivity::class.java))
         }

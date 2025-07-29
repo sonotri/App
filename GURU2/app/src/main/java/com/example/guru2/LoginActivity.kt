@@ -107,20 +107,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = kakaoCallback)
             }
-//            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-//                UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-//                    if (error != null) {
-//                        Log.e("KakaoLogin", "카카오톡 로그인 실패", error)
-//                        if (error is ClientError && error.reason == ClientErrorCause.Cancelled) return@loginWithKakaoTalk
-//                        UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-//                    } else if (token != null) {
-//                        Log.i("KakaoLogin", "카카오톡 로그인 성공 ${token.accessToken}")
-//                        callback(token, null)
-//                    }
-//                }
-//            } else {
-//                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-//            }
         }
 
         // 회원가입 버튼 클릭 시
@@ -148,17 +134,43 @@ class LoginActivity : AppCompatActivity() {
 
     // 카카오 사용자 정보 받아 저장
     private fun handleKakaoLogin() {
-        UserApiClient.instance.me { user, _ ->
-            if (user != null) {
+        UserApiClient.instance.me { user, error ->
+            if (error != null) {
+                Toast.makeText(this, "카카오 로그인 실패", Toast.LENGTH_SHORT).show()
+            } else if (user != null) {
                 val kakaoId = user.id.toString()
-                val nickname = user.kakaoAccount?.profile?.nickname ?: "닉네임 없음"
                 val email = user.kakaoAccount?.email ?: "null@null.com"
+                // DB 조회
+                val dbHelper = UserDBHelper(this)
+                val db = dbHelper.readableDatabase
+                val cursor = db.rawQuery("SELECT * FROM user WHERE id = ?", arrayOf(kakaoId))
 
-                saveUserToSQLiteAndPrefs(kakaoId, nickname, email, "kakao", "kakao")
+                if (cursor.moveToFirst()) {
+                    // 이미 가입된 사용자 → SharedPreferences 저장하고 MainActivity로
+                    val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+                    sharedPref.edit().apply {
+                        putString("loggedInUserId", kakaoId)
+                        putString("loginType", "kakao")
+                        apply()
+                    }
 
-                Toast.makeText(this, "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                    cursor.close()
+                    db.close()
+
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                } else {
+                    // 최초 로그인 사용자 → 닉네임 설정 화면으로 이동
+                    cursor.close()
+                    db.close()
+
+                    val intent = Intent(this, SetNicknameActivity::class.java).apply {
+                        putExtra("kakaoId", kakaoId)
+                        putExtra("email", email)
+                    }
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

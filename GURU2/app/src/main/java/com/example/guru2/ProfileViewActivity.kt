@@ -59,18 +59,32 @@ class ProfileViewActivity : AppCompatActivity() {
             cursor.close()
             db.close()
         } else if (loginType == "kakao") {
-            UserApiClient.instance.me { user, error ->
-                if (error != null) {
-                    Toast.makeText(this, "카카오 정보 조회 실패", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else if (user != null) {
-                    nicknameTextView.text = user.kakaoAccount?.profile?.nickname ?: "닉네임 없음"
-                    // 카카오 개발자 콘솔 권한이 없어 이메일을 불러올 수 없음
-                    emailTextView.text = user.kakaoAccount?.email ?: "null@null.com"
-                    userIdTextView.text = user.id.toString()
-                    passwordTextView.text = "카카오 계정 로그인"
-                }
+            val userId = sharedPref.getString("loggedInUserId", null)
+            if (userId == null) {
+                Toast.makeText(this, "사용자 ID가 없습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+                return
             }
+
+            dbHelper = UserDBHelper(this)
+            val db = dbHelper.readableDatabase
+
+            val cursor = db.rawQuery("SELECT * FROM user WHERE id = ?", arrayOf(userId))
+
+            if (cursor.moveToFirst()) {
+                val nickname = cursor.getString(cursor.getColumnIndexOrThrow("nickname"))
+                val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
+
+                nicknameTextView.text = nickname
+                emailTextView.text = email
+                userIdTextView.text = userId
+                passwordTextView.text = "카카오 계정 로그인"
+            } else {
+                Toast.makeText(this, "사용자 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+            cursor.close()
+            db.close()
         } else {
             Toast.makeText(this, "로그인 정보 없음", Toast.LENGTH_SHORT).show()
             finish()

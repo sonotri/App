@@ -36,20 +36,12 @@
                 android:layout_marginBottom="16dp">
 
                 <EditText
-                    android:id="@+id/emailCheck"
+                    android:id="@+id/editTextEmail"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="email" />
-
-                <Button
-                    android:id="@+id/buttonEmailCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="중복 확인"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="#000000"
-                    android:layout_marginStart="8dp" />
+                    android:hint="email"
+                    android:enabled="false" />
             </LinearLayout>
 
             <!-- 닉네임 -->
