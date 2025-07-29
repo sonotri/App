@@ -1,6 +1,7 @@
 package com.example.guru2
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,25 @@ class LocationActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "팀 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnPlayer = findViewById<ImageButton>(R.id.btn_player)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnPlayer.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
         }
     }
 
