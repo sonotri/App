@@ -63,6 +63,7 @@
         <activity android:name=".ProfileManageActivity" />
         <activity android:name=".ProfileViewActivity" />
         <activity android:name=".TeamDetailActivity" />
+        <activity android:name=".SetNicknameActivity" />
 
 
     </application>
