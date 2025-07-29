@@ -64,6 +64,10 @@
         <activity android:name=".ProfileViewActivity" />
         <activity android:name=".TeamDetailActivity" />
         <activity android:name=".SetNicknameActivity" />
+        <activity android:name=".UpcomingMatchActivity" />
+        <activity android:name=".PlayersActivity" />
+        <activity android:name=".RecentResultActivity" />
+        <activity android:name=".PlayerInfoActivity" />
 
 
     </application>

@@ -37,6 +37,7 @@
 
             <!-- 경기 일정 -->
             <TextView
+                android:id="@+id/upcomingMatchesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="📅 Upcoming Matches"
@@ -53,6 +54,7 @@
 
             <!-- 최근 경기 결과 -->
             <TextView
+                android:id="@+id/recentResultsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="📊 Recent Results"
@@ -69,6 +71,7 @@
 
             <!-- 선수 -->
             <TextView
+                android:id="@+id/playersTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="👥 Players"
