@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- 스크롤 가능한 본문 -->
+    <!-- 스크롤 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:textColor="#666666" />
 
-            <!-- 회원 정보 수정(좌/우로) -->
+            <!-- 회원 정보 수정 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="프로필 조회"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:padding="50dp"
                         android:gravity="center"
@@ -83,7 +83,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="프로필 관리"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:padding="50dp"
                         android:gravity="center"
@@ -102,30 +102,63 @@
                 android:gravity="center"
                 android:textColor="#666666" />
 
-            <!-- 탈퇴하기 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardWithdraw"
+            <!-- 탈퇴하기 + 로그아웃 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="20dp">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <!-- 로그아웃 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardLogout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="탈퇴하기"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:padding="50dp"
-                    android:gravity="center"
-                    android:textColor="#333333" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="로그아웃"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:padding="50dp"
+                        android:gravity="center"
+                        android:textColor="#333333" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 탈퇴하기 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardWithdraw"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="탈퇴하기"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:padding="50dp"
+                        android:gravity="center"
+                        android:textColor="#333333" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
+    <!-- 하단 고정 툴바 -->
     <include layout="@layout/toolbar" />
 </LinearLayout>
+
 
 
