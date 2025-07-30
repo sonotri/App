@@ -51,7 +51,7 @@ class PlayersActivity : AppCompatActivity() {
         titleText = findViewById(R.id.playersTitle)
         playersContainer = findViewById(R.id.playersContainer)
 
-        titleText.text = "$teamName - Players"
+        titleText.text = "$teamName - 선수 목록"
 
         val teamId = teamIdMap[teamName] ?: return showError("지원되지 않는 팀입니다.")
 

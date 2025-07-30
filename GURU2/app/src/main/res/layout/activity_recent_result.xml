@@ -10,7 +10,7 @@
         android:id="@+id/recentResultTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recent Results"
+        android:text="최근 경기 결과"
         android:textSize="20sp"
         android:textStyle="bold"
         android:paddingBottom="12dp"/>

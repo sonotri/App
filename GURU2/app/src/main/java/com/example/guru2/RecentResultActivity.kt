@@ -25,7 +25,7 @@ class RecentResultActivity : AppCompatActivity() {
         titleText = findViewById(R.id.recentResultTitle)
         resultContainer = findViewById(R.id.recentResultContainer)
 
-        titleText.text = "$teamName - Recent Results"
+        titleText.text = "$teamName - 최근 경기 결과"
 
         fetchRecentResults()
     }

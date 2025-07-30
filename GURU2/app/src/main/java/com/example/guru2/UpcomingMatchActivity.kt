@@ -27,7 +27,7 @@ class UpcomingMatchActivity : AppCompatActivity() {
         titleText = findViewById(R.id.upcomingMatchTitle)
         scheduleContainer = findViewById(R.id.scheduleContainer)
 
-        titleText.text = "$teamName - Upcoming Matches"
+        titleText.text = "$teamName - 다가오는 경기 일정"
 
         fetchUpcomingMatches()
     }
