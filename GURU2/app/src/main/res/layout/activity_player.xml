@@ -22,7 +22,7 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Team / Player List"
+                android:text="팀 목록"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:gravity="center"

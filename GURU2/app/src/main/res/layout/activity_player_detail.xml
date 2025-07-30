@@ -40,7 +40,7 @@
                 android:id="@+id/upcomingMatchesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📅 Upcoming Matches"
+                android:text="📅 다가오는 경기 일정"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -57,7 +57,7 @@
                 android:id="@+id/recentResultsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📊 Recent Results"
+                android:text="📊 최근 경기 결과"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
@@ -74,7 +74,7 @@
                 android:id="@+id/playersTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="👥 Players"
+                android:text="👥 선수 목록"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />

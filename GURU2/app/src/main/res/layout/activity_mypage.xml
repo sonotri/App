@@ -24,7 +24,7 @@
                 android:id="@+id/textViewLoginTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="My Page"
+                android:text="마이페이지"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:gravity="center"
