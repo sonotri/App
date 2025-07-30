@@ -100,9 +100,5 @@ class ScheduleActivity : AppCompatActivity() {
                 continue
             }
         }
-
-        for ((calendarDay, emoji) in emojiMap) {
-            calendarView.addDecorator(EmojiDecorator(calendarDay, emoji))
-        }
     }
 }

@@ -7,7 +7,6 @@ data class RecordMatch(
     val team2: String,
     val stadium: String,
     val viewType: String,
-    val resultEmoji: String,
     val score1: Int,
     val score2: Int,
     val review: String

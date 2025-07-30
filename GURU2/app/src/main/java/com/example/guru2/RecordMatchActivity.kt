@@ -46,11 +46,11 @@ class RecordMatchActivity : AppCompatActivity() {
         spinnerTeam2 = findViewById(R.id.spinnerTeam2)
         spinnerStadium = findViewById(R.id.spinnerStadium)
         radioViewType = findViewById(R.id.radioViewType)
-        radioResult = findViewById(R.id.radioResult)
         editScore1 = findViewById(R.id.editScore1)
         editScore2 = findViewById(R.id.editScore2)
         editReview = findViewById(R.id.editReview)
         btnSave = findViewById(R.id.btnSave)
+        radioResult = findViewById(R.id.radioResult)
 
         // 날짜 리스트 생성
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -145,11 +145,6 @@ class RecordMatchActivity : AppCompatActivity() {
                     "직관" -> radioViewType.check(R.id.radioLive)
                     "집관" -> radioViewType.check(R.id.radioHome)
                 }
-                when (match.resultEmoji) {
-                    "🏆" -> radioResult.check(R.id.radioWin)
-                    "🟰" -> radioResult.check(R.id.radioDraw)
-                    "🥲" -> radioResult.check(R.id.radioLose)
-                }
             }
         } else {
             // 받은 날짜 없으면 오늘 날짜로 선택
@@ -174,12 +169,6 @@ class RecordMatchActivity : AppCompatActivity() {
             val review = editReview.text.toString()
             val viewType =
                 if (radioViewType.checkedRadioButtonId == R.id.radioLive) "직관" else "집관"
-            val resultEmoji = when {
-                radioResult.checkedRadioButtonId == R.id.radioWin -> "🏆"
-                radioResult.checkedRadioButtonId == R.id.radioDraw -> "🟰"
-                radioResult.checkedRadioButtonId == R.id.radioLose -> "🥲"
-                else -> ""
-            }
 
             if (selectedDate == "날짜를 선택하세요") {
                 Toast.makeText(this, "날짜를 선택해주세요.", Toast.LENGTH_SHORT).show()
@@ -204,7 +193,6 @@ class RecordMatchActivity : AppCompatActivity() {
                     id = matchId!!,
                     team1 = team1, team2 = team2,
                     stadium = stadium, viewType = viewType,
-                    resultEmoji = resultEmoji,
                     score1 = score1.toInt(),
                     score2 = score2.toInt(),
                     review = review
@@ -214,7 +202,6 @@ class RecordMatchActivity : AppCompatActivity() {
                 dbHelper.insertMatch(
                     date = selectedDate!!, team1 = team1, team2 = team2,
                     stadium = stadium, viewType = viewType,
-                    resultEmoji = resultEmoji,
                     score1 = score1.toInt(),
                     score2 = score2.toInt(),
                     review = review

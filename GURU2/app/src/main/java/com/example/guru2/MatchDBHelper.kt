@@ -16,7 +16,6 @@ class MatchDBHelper(context: Context) : SQLiteOpenHelper(context, "MatchDB", nul
                 team2 TEXT,
                 stadium TEXT,
                 view_type TEXT,
-                result_emoji TEXT,
                 score1 INTEGER,
                 score2 INTEGER,
                 review TEXT
@@ -31,17 +30,16 @@ class MatchDBHelper(context: Context) : SQLiteOpenHelper(context, "MatchDB", nul
         team2: String,
         stadium: String,
         viewType: String,
-        resultEmoji: String,
         score1: Int,
         score2: Int,
         review: String
     ) {
         val db = writableDatabase
         val sql = """
-        INSERT INTO match_record (date, team1, team2, stadium, view_type, result_emoji, score1, score2, review)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO match_record (date, team1, team2, stadium, view_type, score1, score2, review)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     """.trimIndent()
-        val args = arrayOf(date, team1, team2, stadium, viewType, resultEmoji, score1, score2, review)
+        val args = arrayOf(date, team1, team2, stadium, viewType, score1, score2, review)
         db.execSQL(sql, args)
         db.close()
     }
@@ -59,7 +57,6 @@ class MatchDBHelper(context: Context) : SQLiteOpenHelper(context, "MatchDB", nul
                 team2 = cursor.getString(cursor.getColumnIndexOrThrow("team2")),
                 stadium = cursor.getString(cursor.getColumnIndexOrThrow("stadium")),
                 viewType = cursor.getString(cursor.getColumnIndexOrThrow("view_type")),
-                resultEmoji = cursor.getString(cursor.getColumnIndexOrThrow("result_emoji")),
                 score1 = cursor.getInt(cursor.getColumnIndexOrThrow("score1")),
                 score2 = cursor.getInt(cursor.getColumnIndexOrThrow("score2")),
                 review = cursor.getString(cursor.getColumnIndexOrThrow("review"))
@@ -77,7 +74,6 @@ class MatchDBHelper(context: Context) : SQLiteOpenHelper(context, "MatchDB", nul
         team2: String,
         stadium: String,
         viewType: String,
-        resultEmoji: String,
         score1: Int,
         score2: Int,
         review: String
@@ -85,11 +81,11 @@ class MatchDBHelper(context: Context) : SQLiteOpenHelper(context, "MatchDB", nul
         val db = writableDatabase
         val sql = """
         UPDATE match_record SET
-            team1 = ?, team2 = ?, stadium = ?, view_type = ?, result_emoji = ?,
+            team1 = ?, team2 = ?, stadium = ?, view_type = ?,
             score1 = ?, score2 = ?, review = ?
         WHERE id = ?
     """.trimIndent()
-        val args = arrayOf(team1, team2, stadium, viewType, resultEmoji, score1, score2, review, id)
+        val args = arrayOf(team1, team2, stadium, viewType, score1, score2, review, id)
         db.execSQL(sql, args)
         db.close()
     }
