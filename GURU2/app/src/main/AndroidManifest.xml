@@ -69,6 +69,7 @@
         <activity android:name=".PlayersActivity" />
         <activity android:name=".RecentResultActivity" />
         <activity android:name=".PlayerInfoActivity" />
+        <activity android:name=".RecordMatchActivity" />
 
     </application>
 
