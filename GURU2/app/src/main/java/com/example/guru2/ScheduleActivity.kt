@@ -42,16 +42,9 @@ class ScheduleActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val dateStr = String.format(
-                Locale.KOREA,
-                "%04d-%02d-%02d",
-                selectedDate.year,
-                selectedDate.month,
-                selectedDate.day
-            )
+            val dateStr = selectedDate.date.toString() // yyyy-MM-dd
             val intent = Intent(this, RecordMatchActivity::class.java)
             intent.putExtra("date", dateStr)
-            intent.putExtra("editMode", true)
             startActivity(intent)
         }
 
