@@ -203,5 +203,17 @@
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:backgroundTint="#3F51B5" />
+
+        <!-- 삭제 버튼 -->
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="삭제"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#3F51B5"
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>
