@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FEE500</color>
+    <color name="lime_start">#D5E88C</color>
+    <color name="lime_center">#A5D6A7</color>
+    <color name="lime_end">#80CBC4</color>
+
 </resources>

@@ -1,7 +1,9 @@
 package com.example.guru2
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -88,6 +90,30 @@ class ProfileViewActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "로그인 정보 없음", Toast.LENGTH_SHORT).show()
             finish()
+        }
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnPlayer = findViewById<ImageButton>(R.id.btn_player)
+        val btnLocation = findViewById<ImageButton>(R.id.btn_location)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {}
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnPlayer.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
+        btnLocation.setOnClickListener {
+            startActivity(Intent(this, LocationActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
+        }
+        btnHome.setOnClickListener{
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 

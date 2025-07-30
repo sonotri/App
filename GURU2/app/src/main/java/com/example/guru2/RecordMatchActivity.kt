@@ -149,5 +149,29 @@ class RecordMatchActivity : AppCompatActivity() {
             Toast.makeText(this, "기록 저장 완료", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnPlayer = findViewById<ImageButton>(R.id.btn_player)
+        val btnLocation = findViewById<ImageButton>(R.id.btn_location)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {}
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnPlayer.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
+        btnLocation.setOnClickListener {
+            startActivity(Intent(this, LocationActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
+        }
+        btnHome.setOnClickListener{
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 }
