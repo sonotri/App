@@ -56,11 +56,37 @@ class UpcomingMatchActivity : AppCompatActivity() {
                         .sortedBy { it.dateEvent }
                         .take(5)
 
-                    if (filteredMatches.isNotEmpty()) {
-                        showMatches(filteredMatches)
-                    } else {
-                        showMockData()
+                    val finalMatchList = filteredMatches.toMutableList()
+
+                    // 실제 API 결과가 부족하거나 비시즌일 경우, 아래 목업 데이터를 활용
+                    // -> 시즌 종료 후 일정이 없을 경우 최근 경기를 대체로 보여줌
+                    if (finalMatchList.size < 5) {
+                        val needed = 5 - finalMatchList.size
+                        val mockMatches = listOf(
+                            "$teamName vs Chelsea" to "2025-08-10 20:00",
+                            "$teamName vs Manchester United" to "2025-08-15 19:00",
+                            "Tottenham vs $teamName" to "2025-08-22 18:00",
+                            "$teamName vs Aston Villa" to "2025-08-28 21:00",
+                            "Manchester City vs $teamName" to "2025-09-01 17:30"
+                        )
+
+                        for ((matchText, dateText) in mockMatches.take(needed)) {
+                            val parts = matchText.split(" vs ")
+                            finalMatchList.add(
+                                Match(
+                                    dateEvent = dateText.split(" ")[0],
+                                    strEvent = matchText,
+                                    strHomeTeam = parts[0],
+                                    strAwayTeam = parts[1],
+                                    intHomeScore = null,
+                                    intAwayScore = null,
+                                    strTime = dateText.split(" ").getOrNull(1)
+                                )
+                            )
+                        }
                     }
+
+                    showMatches(finalMatchList)
                 } else {
                     showError("응답 오류: ${response.code()}")
                     showMockData()
@@ -75,6 +101,7 @@ class UpcomingMatchActivity : AppCompatActivity() {
         })
     }
 
+
     private fun showMatches(matches: List<Match>) {
         for (match in matches) {
             val itemView = LayoutInflater.from(this).inflate(R.layout.recent_result_item, scheduleContainer, false)
@@ -83,31 +110,22 @@ class UpcomingMatchActivity : AppCompatActivity() {
             val dateView = itemView.findViewById<TextView>(R.id.textMatchDate)
 
             scoreView.text = "${match.strHomeTeam} vs ${match.strAwayTeam}"
-            dateView.text = "${match.dateEvent} ${match.strTime}"
+
+            val cleanTime = match.strTime?.take(5) ?: ""
+            dateView.text = "${match.dateEvent} $cleanTime"
 
             scheduleContainer.addView(itemView)
         }
     }
 
+    // 목업 데이터
     private fun showMockData() {
-        val notice = TextView(this).apply {
-            text = "(비시즌 기간으로, 아래는 예시 데이터입니다)"
-            textSize = 14f
-            setPadding(0, 24, 0, 24)
-            textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-        scheduleContainer.addView(notice)
-
         val mockMatches = listOf(
-            "Liverpool vs Manchester United" to "2025-08-10 20:00",
-            "Chelsea vs Liverpool" to "2025-08-15 19:00",
-            "Liverpool vs Arsenal" to "2025-08-22 18:00",
-            "Manchester City vs Liverpool" to "2025-08-28 21:00",
-            "Liverpool vs Tottenham" to "2025-09-01 17:30"
+            "$teamName vs Chelsea" to "2025-09-10 20:00",
+            "$teamName vs Manchester United" to "2025-09-15 19:00",
+            "Tottenham vs $teamName" to "2025-09-22 18:00",
+            "$teamName vs Aston Villa" to "2025-10-01 21:00",
+            "Manchester City vs $teamName" to "2025-10-11 17:30"
         )
 
         for ((matchText, dateText) in mockMatches) {

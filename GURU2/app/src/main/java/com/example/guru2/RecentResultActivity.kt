@@ -31,44 +31,58 @@ class RecentResultActivity : AppCompatActivity() {
     }
 
     private fun fetchRecentResults() {
-        RetrofitClient.api.getPastEvents().enqueue(object : Callback<SportsResponse> {
-            override fun onResponse(call: Call<SportsResponse>, response: Response<SportsResponse>) {
-                if (response.isSuccessful) {
-                    val allMatches = response.body()?.events ?: emptyList()
+        RetrofitClient.api.getSeasonEvents(season = "2024-2025")
+            .enqueue(object : Callback<SportsResponse> {
+                override fun onResponse(
+                    call: Call<SportsResponse>,
+                    response: Response<SportsResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val allMatches = response.body()?.events ?: emptyList()
 
-                    val recent = allMatches
-                        .filter {
-                            val home = it.strHomeTeam?.lowercase()?.replace(" ", "") ?: ""
-                            val away = it.strAwayTeam?.lowercase()?.replace(" ", "") ?: ""
-                            val normalized = teamName.lowercase().replace(" ", "")
-                            home.contains(normalized) || away.contains(normalized)
+                        val recent = allMatches
+                            .filter {
+                                val home = it.strHomeTeam?.lowercase()?.replace(" ", "") ?: ""
+                                val away = it.strAwayTeam?.lowercase()?.replace(" ", "") ?: ""
+                                val normalized = teamName.lowercase().replace(" ", "")
+                                home.contains(normalized) || away.contains(normalized)
+                            }
+                            .take(5)
+
+                        val matchCount = recent.size
+                        val mockNeeded = 5 - matchCount
+
+                        val matches = if (mockNeeded > 0) {
+                            val mockMatches = generateMockMatches(teamName, mockNeeded)
+                            recent + mockMatches
+                        } else {
+                            recent
                         }
-                        .take(5)
 
-                    if (recent.isNotEmpty()) {
-                        showMatches(recent)
+                        showMatches(matches)
                     } else {
-                        showMockData()
+                        showError("응답 오류: ${response.code()}")
+                        showMatches(generateMockMatches(teamName, 5))
                     }
-                } else {
-                    showError("응답 오류: ${response.code()}")
-                    showMockData()
                 }
-            }
 
-            override fun onFailure(call: Call<SportsResponse>, t: Throwable) {
-                showError("API 호출 실패: ${t.message}")
-                showMockData()
-            }
-        })
+                override fun onFailure(call: Call<SportsResponse>, t: Throwable) {
+                    showError("API 호출 실패: ${t.message}")
+                    showMatches(generateMockMatches(teamName, 5))
+                }
+            })
     }
 
     private fun showMatches(matches: List<Match>) {
         val inflater = LayoutInflater.from(this)
         for (match in matches) {
             val itemView = inflater.inflate(R.layout.recent_result_item, resultContainer, false)
-            val score = "${match.strHomeTeam} ${match.intHomeScore} - ${match.intAwayScore} ${match.strAwayTeam}"
-            val time = "${match.dateEvent ?: ""} ${match.strTime ?: ""}"
+
+            val score = "${match.strHomeTeam} ${match.intHomeScore ?: "-"} - ${match.intAwayScore ?: "-"} ${match.strAwayTeam}"
+
+            val rawTime = match.strTime ?: ""
+            val shortTime = if (rawTime.contains(":")) rawTime.substringBeforeLast(":") else rawTime
+            val time = "${match.dateEvent ?: ""} ${match.strTime?.take(5) ?: ""}"
 
             itemView.findViewById<TextView>(R.id.textMatchScore).text = score
             itemView.findViewById<TextView>(R.id.textMatchDate).text = time
@@ -77,33 +91,30 @@ class RecentResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun showMockData() {
-        val notice = TextView(this).apply {
-            text = "(비시즌 기간으로, 아래는 예시 데이터입니다)"
-            textSize = 14f
-            setPadding(0, 12, 0, 24)
-            textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-        resultContainer.addView(notice)
-
-        val inflater = LayoutInflater.from(this)
-        val mockResults = listOf(
-            Pair("Liverpool 2 - 1 Chelsea", "2025-05-15 21:00"),
-            Pair("Liverpool 0 - 0 Arsenal", "2025-05-10 19:30"),
-            Pair("Tottenham 1 - 3 Liverpool", "2025-05-05 20:00"),
-            Pair("Liverpool 4 - 0 Aston Villa", "2025-05-01 18:00"),
-            Pair("Man City 2 - 2 Liverpool", "2025-04-28 17:30")
+    // 실제 API 결과가 부족하거나 비시즌일 경우, 아래 목업 데이터를 활용
+    // -> 시즌 종료 후 일정이 없을 경우 최근 경기를 대체로 보여줌
+    private fun generateMockMatches(teamName: String, count: Int): List<Match> {
+        val mockTemplate = listOf(
+            Triple("Chelsea", "2 - 1", "2024-08-15 21:00"),
+            Triple("Manchester United", "0 - 0", "2024-05-10 19:30"),
+            Triple("Tottenham", "3 - 1", "2024-05-05 20:00"),
+            Triple("Aston Villa", "4 - 0", "2024-04-28 18:00"),
+            Triple("Man City", "2 - 2", "2024-04-28 17:30")
         )
 
-        for ((score, date) in mockResults) {
-            val itemView = inflater.inflate(R.layout.recent_result_item, resultContainer, false)
-            itemView.findViewById<TextView>(R.id.textMatchScore).text = score
-            itemView.findViewById<TextView>(R.id.textMatchDate).text = date
-            resultContainer.addView(itemView)
+        return mockTemplate.take(count).mapIndexed { index, (opponent, scoreStr, dateTime) ->
+            val (homeScore, awayScore) = scoreStr.split("-").map { it.trim().toInt() }
+            val (date, time) = dateTime.split(" ")
+
+            Match(
+                strHomeTeam = if (index % 2 == 0) teamName else opponent,
+                strAwayTeam = if (index % 2 == 0) opponent else teamName,
+                intHomeScore = if (index % 2 == 0) homeScore else awayScore,
+                intAwayScore = if (index % 2 == 0) awayScore else homeScore,
+                dateEvent = date,
+                strEvent = null,
+                strTime = time
+            )
         }
     }
 

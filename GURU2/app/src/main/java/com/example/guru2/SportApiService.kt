@@ -34,6 +34,13 @@ interface SportsApiService {
 
     @GET("lookup_all_players.php")
     fun getPlayers(@Query("id") teamId: String): Call<PlayerResponse>
+
+    @GET("eventsseason.php")
+    fun getSeasonEvents(
+        @Query("id") leagueId: Int = 4328,
+        @Query("s") season: String = "2023-2024"
+    ): Call<SportsResponse>
+
 }
 
 
