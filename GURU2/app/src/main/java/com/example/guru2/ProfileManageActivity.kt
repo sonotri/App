@@ -1,10 +1,12 @@
 package com.example.guru2
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.user.UserApiClient
 
@@ -134,7 +136,33 @@ class ProfileManageActivity : AppCompatActivity() {
             Toast.makeText(this, "회원정보가 수정되었습니다", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnPlayer = findViewById<ImageButton>(R.id.btn_player)
+        val btnLocation = findViewById<ImageButton>(R.id.btn_location)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {}
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnPlayer.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
+        btnLocation.setOnClickListener {
+            startActivity(Intent(this, LocationActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
+        }
+        btnHome.setOnClickListener{
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
+
+
     private fun isValidNickname(nickname: String): Boolean {
         val nicknameRegex = Regex("^[가-힣]{3,10}$")
         return nicknameRegex.matches(nickname)

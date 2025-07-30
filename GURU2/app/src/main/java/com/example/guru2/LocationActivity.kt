@@ -56,6 +56,7 @@ class LocationActivity : AppCompatActivity() {
         btnProfile.setOnClickListener {
             startActivity(Intent(this, MypageActivity::class.java))
         }
+
     }
 
     private fun searchTeamInfo(teamName: String) {

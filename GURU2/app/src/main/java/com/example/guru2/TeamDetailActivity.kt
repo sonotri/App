@@ -2,6 +2,7 @@ package com.example.guru2
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -65,5 +66,30 @@ class TeamDetailActivity : AppCompatActivity() {
             intent.putExtra("teamName", teamName)
             startActivity(intent)
         }
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnLocation = findViewById<ImageButton>(R.id.btn_location)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnLocation.setOnClickListener {
+            startActivity(Intent(this, LocationActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
+        }
     }
+
+
+
+
 }

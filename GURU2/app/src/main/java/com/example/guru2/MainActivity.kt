@@ -95,30 +95,56 @@ class MainActivity : AppCompatActivity() {
     private fun loadUpcomingMatches() {
         RetrofitClient.api.getUpcomingEvents().enqueue(object : Callback<SportsResponse> {
             override fun onResponse(call: Call<SportsResponse>, response: Response<SportsResponse>) {
-                val allUpcoming = response.body()?.events ?: return
+                val allUpcoming = response.body()?.events ?: emptyList()
 
                 val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val today = formatter.parse(formatter.format(Date()))
 
-                val closest = allUpcoming
-                    .filter {
-                        try {
-                            val eventDate = formatter.parse(it.dateEvent ?: "9999-12-31")
-                            eventDate != null && eventDate.after(today)
-                        } catch (e: Exception) {
-                            false
-                        }
+                val filtered = allUpcoming.filter {
+                    try {
+                        val eventDate = formatter.parse(it.dateEvent ?: "9999-12-31")
+                        eventDate != null && eventDate.after(today)
+                    } catch (e: Exception) {
+                        false
                     }
-                    .sortedBy {
-                        formatter.parse(it.dateEvent ?: "9999-12-31")
-                    }
-                    .take(2)
-
-                if (closest.isNotEmpty()) {
-                    upcomingTitleTextView.visibility = View.VISIBLE
-                    upcomingRecyclerView.visibility = View.VISIBLE
-                    upcomingRecyclerView.adapter = MatchAdapter(closest)
+                }.sortedBy {
+                    formatter.parse(it.dateEvent ?: "9999-12-31")
                 }
+
+                val finalMatchList = mutableListOf<Match>()
+                finalMatchList.addAll(filtered.take(4))  // 최대 4개
+
+                // API 경기 부족하면 목업 경기 자동 추가
+                if (finalMatchList.size < 4) {
+                    val needed = 5 - finalMatchList.size
+                    val mockMatches = listOf(
+                        "Arsenal vs Chelsea" to "2025-08-18 20:00",
+                        "Leeds United vs Manchester United" to "2025-08-20 19:00",
+                        "Tottenham vs Brighton" to "2025-08-25 18:00",
+                        "Newcastle vs Aston Villa" to "2025-08-29 21:00",
+                        "Manchester City vs West Ham" to "2025-09-01 17:30"
+                    )
+
+                    for ((matchText, dateText) in mockMatches.take(needed)) {
+                        val parts = matchText.split(" vs ")
+                        finalMatchList.add(
+                            Match(
+                                dateEvent = dateText.split(" ")[0],
+                                strEvent = matchText,
+                                strHomeTeam = parts[0],
+                                strAwayTeam = parts[1],
+                                intHomeScore = null,
+                                intAwayScore = null,
+                                strTime = dateText.split(" ").getOrNull(1)
+                            )
+                        )
+                    }
+                }
+
+                // 어댑터 연결
+                upcomingTitleTextView.visibility = View.VISIBLE
+                upcomingRecyclerView.visibility = View.VISIBLE
+                upcomingRecyclerView.adapter = MatchAdapter(finalMatchList)
             }
 
             override fun onFailure(call: Call<SportsResponse>, t: Throwable) {
@@ -126,4 +152,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+
 }

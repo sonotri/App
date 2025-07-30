@@ -1,9 +1,11 @@
 package com.example.guru2
 
+import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -30,6 +32,30 @@ class UpcomingMatchActivity : AppCompatActivity() {
         titleText.text = "$teamName - 다가오는 경기 일정"
 
         fetchUpcomingMatches()
+
+        // 하단 메뉴 버튼 연결
+        val btnHome = findViewById<ImageButton>(R.id.btn_home)
+        val btnSchedule = findViewById<ImageButton>(R.id.btn_schedule)
+        val btnPlayer = findViewById<ImageButton>(R.id.btn_player)
+        val btnLocation = findViewById<ImageButton>(R.id.btn_location)
+        val btnProfile = findViewById<ImageButton>(R.id.btn_profile)
+
+        btnHome.setOnClickListener {}
+        btnSchedule.setOnClickListener {
+            startActivity(Intent(this, ScheduleActivity::class.java))
+        }
+        btnPlayer.setOnClickListener {
+            startActivity(Intent(this, PlayerActivity::class.java))
+        }
+        btnLocation.setOnClickListener {
+            startActivity(Intent(this, LocationActivity::class.java))
+        }
+        btnProfile.setOnClickListener {
+            startActivity(Intent(this, MypageActivity::class.java))
+        }
+        btnHome.setOnClickListener{
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     private fun fetchUpcomingMatches() {

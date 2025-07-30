@@ -1,207 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <!-- 스크롤 가능한 콘텐츠 영역 -->
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:layout_marginTop="20dp">
-
-
-        <!-- 날짜 선택 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-        <Spinner
-            android:id="@+id/btnDate"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/less_round_border"
-            android:layout_marginBottom="30dp"/>
-
-
-        <!-- 경기팀 선택 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Teams"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerTeam1"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/less_round_border" />
-
-        <Spinner
-            android:id="@+id/spinnerTeam2"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/less_round_border" />
-
-        <!-- 경기장 선택 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stadium"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerStadium"
-            android:layout_width="350dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/less_round_border" />
-
-        <!-- 직관/집관 여부 선택 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Type"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <RadioGroup
-            android:id="@+id/radioViewType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <RadioButton
-                android:id="@+id/radioLive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
-                android:text="직관" />
-
-            <RadioButton
-                android:id="@+id/radioHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="집관" />
-        </RadioGroup>
-
-        <!-- 점수 입력 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Score"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fixedToolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="30dp">
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:layout_marginTop="20dp">
 
-            <EditText
-                android:id="@+id/editScore1"
-                android:layout_width="0dp"
+            <!-- 날짜 선택 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날짜"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <Spinner
+                android:id="@+id/btnDate"
+                android:layout_width="350dp"
                 android:layout_height="40dp"
-                android:layout_weight="1"
-                android:hint="1"
-                android:gravity="center"
-                android:inputType="number"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/less_round_border"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginBottom="30dp"/>
 
-            <EditText
-                android:id="@+id/editScore2"
-                android:layout_width="0dp"
+            <!-- 경기팀 선택 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="팀"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <Spinner
+                android:id="@+id/spinnerTeam1"
+                android:layout_width="350dp"
                 android:layout_height="40dp"
-                android:layout_weight="1"
-                android:hint="2"
-                android:gravity="center"
-                android:inputType="number"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/less_round_border" />
+            <Spinner
+                android:id="@+id/spinnerTeam2"
+                android:layout_width="350dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/less_round_border" />
+
+            <!-- 경기장 선택 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="구장"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <Spinner
+                android:id="@+id/spinnerStadium"
+                android:layout_width="350dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/less_round_border" />
+
+            <!-- 직관/집관 여부 선택 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관람 방법"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <RadioGroup
+                android:id="@+id/radioViewType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+                <RadioButton
+                    android:id="@+id/radioLive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:text="직관" />
+                <RadioButton
+                    android:id="@+id/radioHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="집관" />
+            </RadioGroup>
+
+            <!-- 점수 입력 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="스코어"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="30dp">
+                <EditText
+                    android:id="@+id/editScore1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:hint="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:background="@drawable/less_round_border"
+                    android:layout_marginEnd="8dp" />
+                <EditText
+                    android:id="@+id/editScore2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:hint="2"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:background="@drawable/less_round_border" />
+            </LinearLayout>
+
+            <!-- 승패 여부 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경기 결과"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <RadioGroup
+                android:id="@+id/radioResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
+                <RadioButton
+                    android:id="@+id/radioWin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:text="🏆 승리" />
+                <RadioButton
+                    android:id="@+id/radioDraw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="🟰 무승부" />
+                <RadioButton
+                    android:id="@+id/radioLose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:text="🥲 패배" />
+            </RadioGroup>
+
+            <!-- 소감 작성 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="관람 기록"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+            <EditText
+                android:id="@+id/editReview"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="top"
+                android:hint="소감을 작성해보세요!"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="24dp" />
+
+            <!-- 저장 버튼 -->
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="저장"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#3F51B5"
+                android:layout_marginBottom="20dp"/>
+
         </LinearLayout>
+    </ScrollView>
 
-        <!-- 승패 여부 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Result"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <RadioGroup
-            android:id="@+id/radioResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="30dp">
-
-            <RadioButton
-                android:id="@+id/radioWin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
-                android:text="🏆 Win" />
-
-            <RadioButton
-                android:id="@+id/radioDraw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="🟰 Draw" />
-
-            <RadioButton
-                android:id="@+id/radioLose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
-                android:text="🥲 Lose" />
-        </RadioGroup>
-
-        <!-- 소감 작성 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Review"
-            android:textSize="23dp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
-
-        <EditText
-            android:id="@+id/editReview"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="top"
-            android:hint="소감을 작성해보세요!"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="24dp" />
-
-        <!-- 저장 버튼 -->
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="저장"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#3F51B5" />
-    </LinearLayout>
-</ScrollView>
+    <!-- 고정 툴바 -->
+    <include
+        android:id="@+id/fixedToolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
