@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient_bg"
+    android:background="@drawable/ground"
     android:fitsSystemWindows="true">
 
-    <!-- 스크롤 -->
+    <!-- 스크롤 가능한 영역 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <!-- 로고 사진 -->
+            <!-- 팀 로고 -->
             <ImageView
                 android:id="@+id/teamLogoImage"
                 android:layout_width="80dp"
@@ -30,55 +30,87 @@
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter" />
 
-            <!-- 선수 사진 -->
-            <ImageView
-                android:id="@+id/playerImage"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:scaleType="centerCrop"
-                android:layout_marginBottom="24dp" />
+            <!-- 잔디 이미지 배경 안에 선수 정보 -->
+            <FrameLayout
+                android:layout_width="300dp"
+                android:layout_height="425dp"
+                android:padding="24dp"
+                android:layout_marginBottom="24dp">
 
-            <!-- 선수 이름 -->
-            <TextView
-                android:id="@+id/playerName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Player Name"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
 
-            <!-- 포지션 -->
-            <TextView
-                android:id="@+id/playerPosition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Position: Midfielder"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                    <!-- 선수 사진 -->
+                    <ImageView
+                        android:id="@+id/playerImage"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginBottom="24dp" />
 
-            <!-- 국적 -->
-            <TextView
-                android:id="@+id/playerNationality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nationality: Spain"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                    <!-- 흰색 박스 안에 텍스트 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/round_border"
+                        android:padding="16dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:elevation="2dp"
+                        android:gravity="center_horizontal"
+                        >
 
-            <!-- 생년월일 -->
-            <TextView
-                android:id="@+id/playerBirth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Birth: 1996-05-17"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
+                        <!-- 이름 -->
+                        <TextView
+                            android:id="@+id/playerName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Player Name"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="16dp" />
 
+                        <!-- 포지션 -->
+                        <TextView
+                            android:id="@+id/playerPosition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Position: Midfielder"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="8dp" />
+
+                        <!-- 국적 -->
+                        <TextView
+                            android:id="@+id/playerNationality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nationality: Spain"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="8dp" />
+
+                        <!-- 생년월일 -->
+                        <TextView
+                            android:id="@+id/playerBirth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Birth: 1996-05-17"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginBottom="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 
-    <!-- 툴바 -->
+    <!-- 하단 고정 툴바 -->
     <include layout="@layout/toolbar" />
-
 </LinearLayout>
+
+
