@@ -18,13 +18,13 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <!-- 팀 로고 사진 -->
+            <!-- 로고 사진 -->
             <ImageView
                 android:id="@+id/teamLogoImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="12dp"
-                android:contentDescription="팀 로고"
+                android:contentDescription="로고"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter" />
 
